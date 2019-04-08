@@ -170,6 +170,9 @@ class Job
     /** @ORM\Column(type = "integer", name="memoryUsageReal", nullable = true, options = {"unsigned": true}) */
     private $memoryUsageReal;
 
+    /** @ORM\Column(type = "string", length = 15, nullable=true) */
+    private $market;
+
     /**
      * This may store any entities which are related to this job, and are
      * managed by Doctrine.
@@ -540,6 +543,16 @@ class Job
         }
 
         $this->originalJob = $job;
+    }
+
+    public function getMarket()
+    {
+        return $this->market;
+    }
+
+    public function setMarket($market)
+    {
+        $this->market = $market;
     }
 
     public function addRetryJob(Job $job)
