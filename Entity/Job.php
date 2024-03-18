@@ -172,8 +172,8 @@ class Job
 
     /** @ORM\Column(type = "string", length = 15, nullable=true) */
     private $market;
-
-    /** @ORM\Column(type = "integer", nullable=true) */ 
+    
+    /** @ORM\Column(type = "integer", name="objectId", nullable=true) */	
     private $objectId;
 
     
