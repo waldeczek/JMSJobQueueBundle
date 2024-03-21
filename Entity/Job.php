@@ -145,7 +145,7 @@ class Job
     private $maxRetries = 0;
 
     #[ORM\JoinColumn(name: 'originalJob_id', referencedColumnName: 'id')]
-    #[ORM\ManyToOne(targetEntity: 'Job')]
+    #[ORM\ManyToOne(targetEntity: 'Job', inversedBy: 'retryJobs')]
     private $originalJob;
 
     #[ORM\OneToMany(targetEntity: "Job", mappedBy: "originalJob", cascade: ["persist", "remove", "detach", "refresh"])]
