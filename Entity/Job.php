@@ -123,10 +123,10 @@ class Job
     #[ORM\Column(type: 'json')]
     private $args;
 
-    #[ORM\ManyToMany(targetEntity: "Job", fetch: "EAGER")]
-    #[JoinTable(name: "jms_job_dependencies")]
-    #[JoinColumn(name: "source_job_id", referencedColumnName: "id")]
-    #[InverseJoinColumn(name: "dest_job_id", referencedColumnName: "id")]
+    #[ORM\ManyToMany(targetEntity: Job::class, fetch: "EAGER")]
+    #[ORM\JoinTable(name: "jms_job_dependencies")]
+    #[ORM\JoinColumn(name: "source_job_id", referencedColumnName: "id")]
+    #[ORM\InverseJoinColumn(name: "dest_job_id", referencedColumnName: "id")]
     private $dependencies;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -148,7 +148,7 @@ class Job
     #[ORM\ManyToOne(targetEntity: 'Job', inversedBy: 'retryJobs')]
     private $originalJob;
 
-    #[ORM\OneToMany(targetEntity: "Job", mappedBy: "originalJob", cascade: ["persist", "remove", "detach", "refresh"])]
+    #[ORM\OneToMany(targetEntity: Job::class, mappedBy: "originalJob", cascade: ["persist", "remove", "detach", "refresh"])]
     private $retryJobs;
 
     #[ORM\Column(type: 'jms_job_safe_object', name: 'stackTrace', nullable: true)]
