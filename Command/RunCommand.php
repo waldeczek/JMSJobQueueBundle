@@ -18,12 +18,14 @@
 
 namespace JMS\JobQueueBundle\Command;
 
+use Doctrine\DBAL\Logging\Middleware;
 use Doctrine\ORM\EntityManager;
 use JMS\JobQueueBundle\Entity\Job;
 use JMS\JobQueueBundle\Entity\Repository\JobManager;
 use JMS\JobQueueBundle\Event\NewOutputEvent;
 use JMS\JobQueueBundle\Event\StateChangeEvent;
 use JMS\JobQueueBundle\Exception\InvalidArgumentException;
+use Psr\Log\NullLogger;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -132,7 +134,7 @@ class RunCommand extends Command
         $this->env = $input->getOption('env');
         $this->verbose = $input->getOption('verbose');
         $this->output = $output;
-        $this->getEntityManager()->getConnection()->getConfiguration()->setSQLLogger(null);
+        $this->getEntityManager()->getConnection()->getConfiguration()->setMiddlewares([new Middleware(new NullLogger())]);
 
         if ($this->verbose) {
             $this->output->writeln('Cleaning up stale jobs');
@@ -453,6 +455,6 @@ class RunCommand extends Command
 
     private function getEntityManager(): EntityManager
     {
-        return /** @var EntityManager */ $this->registry->getManagerForClass('JMSJobQueueBundle:Job');
+        return /** @var EntityManager */ $this->registry->getManagerForClass(Job::class);
     }
 }
