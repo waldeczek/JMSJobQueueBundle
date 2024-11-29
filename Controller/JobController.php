@@ -19,11 +19,11 @@ use Twig\Environment;
 
 class JobController
 {
-    public function __construct(private JobManager $jobManager,
-                                private ManagerRegistry $managerRegistry, 
-                                private Environment $twig,
-                                private RouterInterface $router,
-                                private bool $enableStats)
+    public function __construct(JobManager $jobManager,
+                                ManagerRegistry $managerRegistry, 
+                                Environment $twig,
+                                RouterInterface $router,
+                                bool $enableStats)
     {
     }
 
